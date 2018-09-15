@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.manjurulhoque.qrcodescanner">
 
+    <!-- camera permission -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
