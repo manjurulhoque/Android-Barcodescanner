@@ -3,4 +3,8 @@
     <color name="colorPrimary">#00B0FF</color>
     <color name="colorPrimaryDark">#40C4FF</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="viewfinder_laser">#00ccb4</color>
+    <color name="viewfinder_border">#44d1ed</color>
 </resources>
