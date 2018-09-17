@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 
 import com.manjurulhoque.qrcodescanner.R;
 
-public class GenerateFragment extends Fragment {
+public class GenerateBarcodeFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_generate, container, false);
+        View view = inflater.inflate(R.layout.fragment_generate_barcode, container, false);
 
         return view;
     }

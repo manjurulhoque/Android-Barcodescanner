@@ -7,7 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.manjurulhoque.qrcodescanner.fragments.GenerateFragment;
+import com.manjurulhoque.qrcodescanner.fragments.GenerateBarcodeFragment;
+import com.manjurulhoque.qrcodescanner.fragments.GenerateQRcodeFragment;
 import com.manjurulhoque.qrcodescanner.fragments.ScanFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,10 +39,15 @@ public class MainActivity extends AppCompatActivity {
                     transaction.replace(R.id.content_frame, new ScanFragment());
                     transaction.commit();
                     return true;
-                case R.id.navigation_generate:
+                case R.id.navigation_generate_barcode:
                     FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
-                    transaction2.replace(R.id.content_frame, new GenerateFragment());
+                    transaction2.replace(R.id.content_frame, new GenerateBarcodeFragment());
                     transaction2.commit();
+                    return true;
+                case R.id.navigation_generate_qrcode:
+                    FragmentTransaction transaction3 = getSupportFragmentManager().beginTransaction();
+                    transaction3.replace(R.id.content_frame, new GenerateQRcodeFragment());
+                    transaction3.commit();
                     return true;
             }
             return false;
