@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -23,6 +25,8 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.manjurulhoque.qrcodescanner.R;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Arrays;
 
 public class GenerateBarcodeFragment extends Fragment {
@@ -31,6 +35,8 @@ public class GenerateBarcodeFragment extends Fragment {
     private ImageView mImageView;
     private FloatingActionButton mSave;
     private Activity mActivity;
+    private Bitmap generatedBitmap;
+    private String fileName;
 
     @Nullable
     @Override
@@ -64,10 +70,38 @@ public class GenerateBarcodeFragment extends Fragment {
             }
         });
 
+        mSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveImage(generatedBitmap);
+            }
+        });
+
         return view;
     }
 
+    private void saveImage(Bitmap generatedBitmap) {
+        FileOutputStream out = null;
+        File file = new File(Environment.getExternalStorageDirectory().getPath(), "QRCodeBarCode");
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        if (fileName.contains("/")) {
+            fileName = fileName.replace("/", "\\");
+        }
+        String filePath = (file.getAbsolutePath() + "/" + fileName + ".png");
+        try {
+            out = new FileOutputStream(filePath);
+            generatedBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Toast.makeText(mActivity, "File saved at\n" + filePath, Toast.LENGTH_SHORT).show();
+    }
+
     private void generateBarcode(String s) {
+        fileName = s;
         MultiFormatWriter writer = new MultiFormatWriter();
         String finalData = Uri.encode(s);
 
@@ -88,6 +122,8 @@ public class GenerateBarcodeFragment extends Fragment {
             Arrays.fill(column, bm.get(i, 0) ? Color.BLACK : Color.WHITE);
             imageBitmap.setPixels(column, 0, 1, i, 0, 1, 640);
         }
+
+        generatedBitmap = imageBitmap;
 
         mImageView.setImageBitmap(imageBitmap);
     }
